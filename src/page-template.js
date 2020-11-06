@@ -1,6 +1,82 @@
-module.exports = templateData => {
-    // destructure page data by section
-    const { projects, about, ...header } = templateData;
+// generate employee cards
+const generateEmployee = teamProfile => {
+  // filter roles and create cards based on priority; manager, engineer, intern
+  return `
+    <div class="container flex-row justify-space-between align-center">
+      ${teamProfile
+        .filter(({ role }) => role === 'Manager')
+        .map(({ name, role, id, email, officeNumber }) => {
+          return `
+          <div class="card">
+            <div class="card-header">
+              <h2>${name}</h2>
+              <h3><i class="fas fa-mug-hot"></i> ${role}</h3>
+            </div>
+            <div class="card-body">
+              <nav>
+                <ul>
+                  <li><p>ID: ${id}</p></li>
+                  <li><p>Email: ${email}</p></li>
+                  <li><p>Office Number: ${officeNumber}</p></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          `;
+        })
+        .join('')}
+
+      ${teamProfile
+        .filter(({ role }) => role === 'Engineer')
+        .map(({ name, role, id, email, github }) => {
+          return `
+          <div class="card">
+            <div class="card-header">
+              <h2>${name}</h2>
+              <h3><i class="fas fa-glasses"></i> ${role}</h3>
+            </div>
+            <div class="card-body">
+              <nav>
+                <ul>
+                  <li><p>ID: ${id}</p></li>
+                  <li><p>Email: ${email}</p></li>
+                  <li><p>GitHub: ${github}</p></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          `;
+          })
+        .join('')}
+
+        ${teamProfile
+          .filter(({ role }) => role === 'Intern')
+          .map(({ name, role, id, email, school }) => {
+            return `
+            <div class="card">
+              <div class="card-header">
+                <h2>${name}</h2>
+                <h3><i class="fas fa-graduation-cap"></i> ${role}</h3>
+              </div>
+              <div class="card-body">
+                <nav>
+                  <ul>
+                    <li><p>ID: ${id}</p></li>
+                    <li><p>Email: ${email}</p></li>
+                    <li><p>School: ${school}</p></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            `;
+            })
+          .join('')}
+    </div> 
+  `;
+};
+
+module.exports = teamProfileData => {
+    const teamProfile = teamProfileData;
   
     return `
     <!DOCTYPE html>
@@ -17,18 +93,21 @@ module.exports = templateData => {
     </head>
   
     <body>
+
       <header>
         <div class="container flex-row justify-space-between align-center py-3">
-          <h1 class="page-title text-secondary bg-dark py-2 px-3">${header.name}</h1>
-          <nav>
-          </nav>
+          <h1 class="page-title text-secondary bg-dark py-1 px-1">My Team</h1>
         </div>
       </header>
+
       <main>
+        ${generateEmployee(teamProfile)}
       </main>
+
       <footer class="container text-center py-3">
-        <h3 class="text-dark">&copy; ${new Date().getFullYear()} by ${header.name}</h3>
+        <h3 class="text-dark">&copy; ${new Date().getFullYear()} by rpajewski</h3>
       </footer>
+
     </body>
     </html>
     `;
