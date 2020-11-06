@@ -4,7 +4,7 @@ const generateEmployee = teamProfile => {
   return `
     <div class="container flex-row justify-space-between align-center">
       ${teamProfile
-        .filter(({ role }) => role === 'Manager')
+        .filter(({ Manager }) => Manager)
         .map(({ name, role, id, email, officeNumber }) => {
           return `
           <div class="card">
@@ -27,7 +27,7 @@ const generateEmployee = teamProfile => {
         .join('')}
 
       ${teamProfile
-        .filter(({ role }) => role === 'Engineer')
+        .filter(({ Engineer }) => Engineer)
         .map(({ name, role, id, email, github }) => {
           return `
           <div class="card">
@@ -50,7 +50,7 @@ const generateEmployee = teamProfile => {
         .join('')}
 
         ${teamProfile
-          .filter(({ role }) => role === 'Intern')
+          .filter(({ Intern }) => Intern)
           .map(({ name, role, id, email, school }) => {
             return `
             <div class="card">
@@ -76,6 +76,7 @@ const generateEmployee = teamProfile => {
 };
 
 module.exports = teamProfileData => {
+  // console.log(teamProfileData)
     const teamProfile = teamProfileData;
   
     return `

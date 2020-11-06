@@ -5,6 +5,10 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
+// array to hold employees
+const employees = [];
+
+// employee questions that extend to manager, engineer and intern
 const employeeQuestions = [
     {
         type: 'input',
@@ -50,6 +54,7 @@ const employeeQuestions = [
     }
 ];
 
+// manager question
 const managerQuestions = [
     {
         type: 'input',
@@ -62,15 +67,10 @@ const managerQuestions = [
                 return false;
             }
         }
-    },
-    {
-        type: 'confirm',
-        name: 'role',
-        message: 'Please confirm this employee is a Manager.',
-        default: true
     }
 ];
 
+// engineer question
 const engineerQuestions = [
     {
         type: 'input',
@@ -83,15 +83,10 @@ const engineerQuestions = [
                 return false;
             }
         }
-    },
-    {
-        type: 'confirm',
-        name: 'role',
-        message: 'Please confirm this employee is an Engineer.',
-        default: true
     }
 ];
 
+// intern question
 const internQuestions = [
     {
         type: 'input',
@@ -104,53 +99,116 @@ const internQuestions = [
                 return false;
             }
         }
-    },
-    {
-        type: 'confirm',
-        name: 'role',
-        message: 'Please confirm this employee is an Intern.',
-        default: true
     }
 ];
 
+// push new manager using manager class to employees array
+const addManager = (employeeAnswers) => {
+    // ask manager question
+    return inquirer.prompt(managerQuestions)
+
+    // create new manager object and assign variables
+    .then(managerAnswers => {
+        let manager = new Manager(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, managerAnswers.officeNumber, employeeAnswers.role);
+        employees.push(manager);
+
+        // ask to add another employee
+        return addAnotherEmployee();
+    })
+};
+
+// push new engineer using engineer class to employees array
+const addEngineer = (employeeAnswers) => {
+    // ask engineer question
+    return inquirer.prompt(engineerQuestions)
+
+    // create new engineer object and assign variables
+    .then(engineerAnswers => {
+        let engineer = new Engineer(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, engineerAnswers.github, employeeAnswers.role);
+        employees.push(engineer);
+
+        // ask to add another employee
+        return addAnotherEmployee();
+    })
+};
+
+// push new intern using intern class to employees array
+const addIntern = (employeeAnswers) => {
+    // ask intern question
+    return inquirer.prompt(internQuestions)
+
+    // create new intern object and assign variables
+    .then(internAnswers => {
+        let intern = new Intern(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, internAnswers.github, employeeAnswers.role);
+        employees.push(intern);
+
+        // ask to add another employee
+        return addAnotherEmployee();
+    })
+};
+
+// ask extended class questions then decide what role the employee has
 const promptUser = () => {
+    // employee questions
     return inquirer.prompt(employeeQuestions)
 
-    .then(employeeQuestions => {
-        console.log(employeeQuestions)
-        if (employeeQuestions.role.includes('Manager')) {
-            return inquirer.prompt(managerQuestions);
+    // seperate employee by roles and ask role specific questions
+    .then(employeeAnswers => {
+        if (employeeAnswers.role.includes('Manager')) {
+            return addManager(employeeAnswers);
         }
-        else if (employeeQuestions.role.includes('Engineer')) {
-            return inquirer.prompt(engineerQuestions);
+        else if (employeeAnswers.role.includes('Engineer')) {
+            return addEngineer(employeeAnswers);
         }
-        else if (employeeQuestions.role.includes('Intern')) {
-            return inquirer.prompt(internQuestions);
+        else if (employeeAnswers.role.includes('Intern')) {
+            return addIntern(employeeAnswers);
         }
         else {
             return console.log('Please select an employee role!');
         }
     })
-    .then(employeeData => {
-        console.log(employeeData)
-        return employeeData;
+};
+
+// prompts user if they want to add another employee or returns full array of employees
+const addAnotherEmployee = () => {
+    return inquirer.prompt([
+        {
+            type: 'confirm',
+            name: 'confirmAddEmployee',
+            message: 'Would you like to add another employee?',
+            default: false
+        }
+    ])
+    .then(addEmployee => {
+        if (addEmployee.confirmAddEmployee) {
+            return promptUser();
+        } else {
+            return createPage(employees);
+        }
     })
 };
 
+// generate html once employees array is full
+const createPage = employeeData => {
+    console.log('Employees added, now generating team profile!')
+    return employeeData;
+};
+
+// initiate program, generate html, write html file, copy css style sheet and move new index and css to dist folder
 promptUser()
-//   .then(employeeData => {
-//     return generatePage(employeeData);
-//   })
-//   .then(pageHTML => {
-//     return writeFile(pageHTML);
-//   })
-//   .then(writeFileResponse => {
-//     console.log(writeFileResponse);
-//     return copyFile();
-//   })
-//   .then(copyFileResponse => {
-//     console.log(copyFileResponse);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
+    .then(employeeData => {
+        return generatePage(employeeData);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .then(writeFileResponse => {
+        console.log(writeFileResponse);
+        return copyFile();
+    })
+    .then(copyFileResponse => {
+        console.log(copyFileResponse);
+    })
+    .catch(err => {
+        console.log(err);
+    });
