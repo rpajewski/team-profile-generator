@@ -47,7 +47,7 @@ const employeeQuestions = [
         }
     },
     {
-        type: 'checkbox',
+        type: 'list',
         name: 'role',
         message: 'Please select the employees role? (Check one)',
         choices: ['Manager', 'Engineer', 'Intern']
@@ -139,7 +139,7 @@ const addIntern = (employeeAnswers) => {
 
     // create new intern object and assign variables
     .then(internAnswers => {
-        let intern = new Intern(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, internAnswers.github, employeeAnswers.role);
+        let intern = new Intern(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, internAnswers.school, employeeAnswers.role);
         employees.push(intern);
 
         // ask to add another employee
@@ -154,13 +154,13 @@ const promptUser = () => {
 
     // seperate employee by roles and ask role specific questions
     .then(employeeAnswers => {
-        if (employeeAnswers.role.includes('Manager')) {
+        if (employeeAnswers.role === 'Manager') {
             return addManager(employeeAnswers);
         }
-        else if (employeeAnswers.role.includes('Engineer')) {
+        else if (employeeAnswers.role === 'Engineer') {
             return addEngineer(employeeAnswers);
         }
-        else if (employeeAnswers.role.includes('Intern')) {
+        else if (employeeAnswers.role === 'Intern') {
             return addIntern(employeeAnswers);
         }
         else {
@@ -190,7 +190,11 @@ const addAnotherEmployee = () => {
 
 // generate html once employees array is full
 const createPage = employeeData => {
-    console.log('Employees added, now generating team profile!')
+    console.log(`
+    ==================================================
+    Employees added, now generating your team profile!
+    ==================================================
+    `);
     return employeeData;
 };
 

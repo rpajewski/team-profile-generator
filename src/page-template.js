@@ -2,81 +2,87 @@
 const generateEmployee = teamProfile => {
   // filter roles and create cards based on priority; manager, engineer, intern
   return `
-    <div class="container flex-row justify-space-between align-center">
-      ${teamProfile
-        .filter(({ Manager }) => Manager)
-        .map(({ name, role, id, email, officeNumber }) => {
-          return `
-          <div class="card">
-            <div class="card-header">
-              <h2>${name}</h2>
-              <h3><i class="fas fa-mug-hot"></i> ${role}</h3>
-            </div>
-            <div class="card-body">
-              <nav>
-                <ul>
-                  <li><p>ID: ${id}</p></li>
-                  <li><p>Email: ${email}</p></li>
-                  <li><p>Office Number: ${officeNumber}</p></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-          `;
-        })
-        .join('')}
-
-      ${teamProfile
-        .filter(({ Engineer }) => Engineer)
-        .map(({ name, role, id, email, github }) => {
-          return `
-          <div class="card">
-            <div class="card-header">
-              <h2>${name}</h2>
-              <h3><i class="fas fa-glasses"></i> ${role}</h3>
-            </div>
-            <div class="card-body">
-              <nav>
-                <ul>
-                  <li><p>ID: ${id}</p></li>
-                  <li><p>Email: ${email}</p></li>
-                  <li><p>GitHub: ${github}</p></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-          `;
-          })
-        .join('')}
-
-        ${teamProfile
-          .filter(({ Intern }) => Intern)
-          .map(({ name, role, id, email, school }) => {
-            return `
-            <div class="card">
-              <div class="card-header">
-                <h2>${name}</h2>
-                <h3><i class="fas fa-graduation-cap"></i> ${role}</h3>
+      <section class="my-3" id="managers">
+        <h2 class="text-dark bg-primary p-2 mb-2 mx-2 display-inline-block">Managers</h2>
+        <div class="flex-row justify-flex-start">
+          ${teamProfile
+            .filter(Manager => Manager.role === 'Manager')
+            .map(({ name, role, id, email, officeNumber }) => {
+              return `
+              <div class="card mx-2">
+                <div class="card-header">
+                  <h2 class="text-secondary p-2">${name}</h2>
+                  <h3 class="text-secondary p-2"><i class="fas fa-mug-hot"></i> ${role}</h3>
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li><p>ID: ${id}</p></li>
+                    <li><p>Email: ${email}</p></li>
+                    <li><p>Office Number: ${officeNumber}</p></li>
+                  </ul>
+                </div>
               </div>
-              <div class="card-body">
-                <nav>
+              `;
+            })
+            .join('')}
+        </div>
+      </section>
+
+      <section class="my-3" id="engineers">
+        <h2 class="text-dark bg-primary p-2 mb-2 mx-2 display-inline-block">Engineers</h2>
+        <div class="flex-row justify-flex-start">
+          ${teamProfile
+            .filter(Engineer => Engineer.role === 'Engineer')
+            .map(({ name, role, id, email, github }) => {
+              return `
+              <div class="card mx-2">
+                <div class="card-header">
+                  <h2 class="text-secondary p-2">${name}</h2>
+                  <h3 class="text-secondary p-2"><i class="fas fa-glasses"></i> ${role}</h3>
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li><p>ID: ${id}</p></li>
+                    <li><p>Email: ${email}</p></li>
+                    <li><p>GitHub: ${github}</p></li>
+                  </ul>
+                </div>
+              </div>
+              `;
+              })
+            .join('')}
+        </div>
+      </section>
+
+      <section class="my-3" id="interns">
+        <h2 class="text-dark bg-primary p-2 mb-2 mx-2 display-inline-block">Interns</h2>
+        <div class="flex-row justify-flex-start">      
+          ${teamProfile
+            .filter(Intern => Intern.role === 'Intern')
+            .map(({ name, role, id, email, school }) => {
+              return `
+              <div class="card mx-2">
+                <div class="card-header">
+                  <h2 class="text-secondary p-2">${name}</h2>
+                  <h3 class="text-secondary p-2"><i class="fas fa-graduation-cap"></i> ${role}</h3>
+                </div>
+                <div class="card-body">
                   <ul>
                     <li><p>ID: ${id}</p></li>
                     <li><p>Email: ${email}</p></li>
                     <li><p>School: ${school}</p></li>
                   </ul>
-                </nav>
+                </div>
               </div>
-            </div>
-            `;
-            })
-          .join('')}
-    </div> 
+              `;
+              })
+            .join('')}
+        </div> 
+      </section>
   `;
 };
 
 module.exports = teamProfileData => {
-  // console.log(teamProfileData)
     const teamProfile = teamProfileData;
   
     return `
@@ -96,12 +102,15 @@ module.exports = teamProfileData => {
     <body>
 
       <header>
-        <div class="container flex-row justify-space-between align-center py-3">
-          <h1 class="page-title text-secondary bg-dark py-1 px-1">My Team</h1>
-        </div>
+      <div class="container flex-row justify-space-between align-center py-3">
+        <h1 class="page-title text-secondary bg-dark py-2 px-3">My Team</h1>
+        <nav class="flex-row">
+          <a class="ml-2 my-1 px-2 py-1 bg-secondary text-dark" href="https://github.com/rpajewski/team-profile-generator">GitHub</a>
+        </nav>
+      </div>
       </header>
 
-      <main>
+      <main class="container my-5">
         ${generateEmployee(teamProfile)}
       </main>
 
