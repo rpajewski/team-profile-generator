@@ -11,13 +11,13 @@ const generateEmployee = teamProfile => {
               return `
               <div class="card mx-2">
                 <div class="card-header">
-                  <h2 class="text-secondary p-2">${name}</h2>
-                  <h3 class="text-secondary p-2"><i class="fas fa-mug-hot"></i> ${role}</h3>
+                  <h2 class="text-light p-2">${name}</h2>
+                  <h3 class="text-light p-2"><i class="fas fa-mug-hot"></i> ${role}</h3>
                 </div>
                 <div class="card-body">
                   <ul>
                     <li><p>ID: ${id}</p></li>
-                    <li><p>Email: ${email}</p></li>
+                    <li><p>Email: <a href="mailto:${email}">${email}</a></p></li>
                     <li><p>Office Number: ${officeNumber}</p></li>
                   </ul>
                 </div>
@@ -37,14 +37,14 @@ const generateEmployee = teamProfile => {
               return `
               <div class="card mx-2">
                 <div class="card-header">
-                  <h2 class="text-secondary p-2">${name}</h2>
-                  <h3 class="text-secondary p-2"><i class="fas fa-glasses"></i> ${role}</h3>
+                  <h2 class="text-light p-2">${name}</h2>
+                  <h3 class="text-light p-2"><i class="fas fa-glasses"></i> ${role}</h3>
                 </div>
                 <div class="card-body">
                   <ul>
                     <li><p>ID: ${id}</p></li>
-                    <li><p>Email: ${email}</p></li>
-                    <li><p>GitHub: ${github}</p></li>
+                    <li><p>Email: <a href="mailto:${email}">${email}</a></p></li>
+                    <li><p>GitHub: <a href="https://github.com/${github}" target="_blank">${github}</a></p></li>
                   </ul>
                 </div>
               </div>
@@ -63,13 +63,13 @@ const generateEmployee = teamProfile => {
               return `
               <div class="card mx-2">
                 <div class="card-header">
-                  <h2 class="text-secondary p-2">${name}</h2>
-                  <h3 class="text-secondary p-2"><i class="fas fa-graduation-cap"></i> ${role}</h3>
+                  <h2 class="text-light p-2">${name}</h2>
+                  <h3 class="text-light p-2"><i class="fas fa-graduation-cap"></i> ${role}</h3>
                 </div>
                 <div class="card-body">
                   <ul>
                     <li><p>ID: ${id}</p></li>
-                    <li><p>Email: ${email}</p></li>
+                    <li><p>Email: <a href="mailto:${email}">${email}</a></p></li>
                     <li><p>School: ${school}</p></li>
                   </ul>
                 </div>
@@ -103,7 +103,7 @@ module.exports = teamProfileData => {
 
       <header>
       <div class="container flex-row justify-space-between align-center py-3">
-        <h1 class="page-title text-secondary bg-dark py-2 px-3">My Team</h1>
+        <h1 class="page-title text-light bg-dark py-2 px-3">My Team</h1>
         <nav class="flex-row">
           <a class="ml-2 my-1 px-2 py-1 bg-secondary text-dark" href="https://github.com/rpajewski/team-profile-generator">GitHub</a>
         </nav>
