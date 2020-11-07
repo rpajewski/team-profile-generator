@@ -32,10 +32,8 @@ This application can quickly organize employees by role while displaying importa
 ![es6](https://img.shields.io/badge/ES6-%20%20-blue)
 ![node](https://img.shields.io/badge/Node-%20%20-blue)
 
-
-
-## Contributing
-filler
-
 ## Tests
 Tests were ran using Jest to verify Employee, Manager, Engineer and Intern classes worked properly. If you would like to use these tests make sure to install Jest by running npm i jest --save-dev.
+
+## Video
+https://drive.google.com/file/d/1Kof_s7PD17wvmaadoGvGg2T5wmm-cOkd/view?usp=sharing
